@@ -38,6 +38,10 @@ public class StreamingJob {
 		// set up the streaming execution environment
 		final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
+		env
+				.setParallelism(1)
+				.fromElements(1, 5, 10, 15)
+				.print();
 		/*
 		 * Here, you can start creating your execution plan for Flink.
 		 *
