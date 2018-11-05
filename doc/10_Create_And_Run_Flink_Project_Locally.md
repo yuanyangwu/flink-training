@@ -52,7 +52,7 @@ Here is the generated project.
 
 ```java
 public class StreamingJob {
-     public static void main(String[] args) throws Exception {
+     public static void main(String[] args) {
           // set up the streaming execution environment
           final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
@@ -104,7 +104,17 @@ Caused by: java.lang.ClassNotFoundException: org.apache.flink.streaming.api.envi
         ... 7 more
 ```
 
-The failure reason is that pom.xml marks flink dependency as "provided". That means flink jar files are only used in compile time. It makes "mvn package" creates a small package excluding unnecessary files.
+The failure reason is that pom.xml marks flink dependency as "provided". That means flink jar files are only used in compile time. It is to make "mvn package" create a small package excluding unnecessary files.
+
+```console
+    <dependency>
+        <groupId>org.apache.flink</groupId>
+        <artifactId>flink-java</artifactId>
+        <version>${flink.version}</version>
+        <scope>provided</scope>
+    </dependency>
+```
+
 IntelliJ IDEA can run the project successfully because pom.xml has a special profile enabling related flink jar files.
 
 ```console
@@ -120,7 +130,7 @@ IntelliJ IDEA can run the project successfully because pom.xml has a special pro
         </dependency>
 ```
 
-To run the project on console, we can enable same profile. It prints results successfully with error message.
+To run the project in console, we can enable same profile. It prints results successfully with error message.
 
 ```console
 > mvn exec:java -Padd-dependencies-for-IDEA -Dexec.mainClass="yuanyangwu.flink.training.StreamingJob"
@@ -141,7 +151,7 @@ To run the project on console, we can enable same profile. It prints results suc
 java.lang.IllegalThreadStateException
 ```
 
-The error message can be resolved with another flag. Here is the final maven command.
+The error message can be resolved with "-Dexec.cleanupDaemonThreads=false". Here is the final maven command.
 
 ```console
 mvn exec:java -Padd-dependencies-for-IDEA -Dexec.cleanupDaemonThreads=false -Dexec.mainClass="yuanyangwu.flink.training.StreamingJob"
