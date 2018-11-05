@@ -70,7 +70,7 @@ public class StreamingJob {
 ## Run project in IDE
 
 - Import the project into IntelliJ IDEA.
-- Right click ```src/main/java/yuanyangwu.flink.training.StreamingJob``` and select menu "Run 'StreamingJob.main'"
+- Right click ```src/main/java/yuanyangwu/flink/training/StreamingJob``` and select menu "Run 'StreamingJob.main'"
 
 ```console
 21:58:30,975 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Collection Source -> Sink: Print to Std. Out (1/1) (64afe53b6f4ba6e01aac84b63ba8ff25) switched from DEPLOYING to RUNNING.
