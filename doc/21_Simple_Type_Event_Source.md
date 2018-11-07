@@ -4,42 +4,50 @@ We will create a Flink source, which generates integer event every 100ms.
 
 class: yuanyangwu.flink.training.streaming.source.IntegerSourceApp
 
-## Integer Source
+## Integer event source
 
 ```java
-    public static class IntegerSource implements SourceFunction<Integer> {
-        private static final long serialVersionUID = 1L;
-        private volatile boolean isRunning = true;
+public static class IntegerSource implements SourceFunction<Integer> {
+    private static final long serialVersionUID = 1L;
+    private volatile boolean isRunning = true;
 
-        @Override
-        public void run(SourceContext<Integer> ctx) throws Exception {
-            int counter = 0;
-            while (isRunning) {
-                counter = (counter + 1) % 100;
-                ctx.collect(counter);
-                Thread.sleep(100L);
-            }
-        }
-
-        @Override
-        public void cancel() {
-            isRunning = false;
+    @Override
+    public void run(SourceContext<Integer> ctx) throws Exception {
+        int counter = 0;
+        while (isRunning) {
+            counter = (counter + 1) % 100;
+            ctx.collect(counter);
+            Thread.sleep(100L);
         }
     }
+
+    @Override
+    public void cancel() {
+        isRunning = false;
+    }
+}
 ```
 
-## Consume Source in an Application
+## Consume events
 
 ```java
-    StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-    env
-            .setBufferTimeout(1000)
-            .setParallelism(1);
+public class IntegerSourceApp {
+    public static void main(String[] args) {
+        try {
+            StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+            env
+                    .setBufferTimeout(1000)
+                    .setParallelism(1);
 
-    DataStreamSource<Integer> source = env.addSource(new IntegerSource());
-    source.print();
+            DataStreamSource<Integer> source = env.addSource(new IntegerSource());
+            source.print();
 
-    env.execute("IntegerSourceApp");
+            env.execute("IntegerSourceApp");
+        } catch (Exception e) {
+            LOG.error("main", e);
+        }
+    }
+}
 ```
 
 ## Run application in IntelliJ IDEA
