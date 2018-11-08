@@ -7,7 +7,7 @@
   - [Simple-type event source](21_Simple_Type_Event_Source.md)
   - [Timestamped event source and monitoring](22_Timestamped_Event_Source_And_Monitoring.md) 
   - [POJO-type event source](23_POJO_Type_Event_Source.md)
-  - Source generating event in a csv file
+  - [Source generating events in a csv file](24_Csv_File_Event_Source.md)
   - Kafka source
   - Kafka sink
 - Run Flink application on Flink cluster
