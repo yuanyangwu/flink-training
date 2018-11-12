@@ -68,6 +68,11 @@ under the License.
 		</dependency>
 
 		<!-- Add connector dependencies here. They must be in the default scope (compile). -->
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-connector-kafka-0.11_2.11</artifactId>
+			<version>${flink.version}</version>
+		</dependency>
 
 		<!-- Example:
 
