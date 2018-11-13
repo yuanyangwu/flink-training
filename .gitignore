@@ -27,3 +27,6 @@ target/
 
 # IntelliJ IDEA
 .idea/
+
+# Flink mvn intermediate file
+dependency-reduced-pom.xml
