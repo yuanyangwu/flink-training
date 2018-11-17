@@ -10,3 +10,5 @@
   - [Source generating events in a csv file](24_Csv_File_Event_Source.md)
   - [Kafka event sink and source](25_Kafka_Event_Sink_And_Source.md)
 - [Run application on Flink cluster](30_Run_Application_On_Flink_Cluster.md)
+- [Test Flink application with JUnit](40_Test_Flink_Application_with_JUnit.md)
+  - [Test operator map](41_Test_Operator_Map.md)
