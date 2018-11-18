@@ -12,3 +12,4 @@
 - [Run application on Flink cluster](30_Run_Application_On_Flink_Cluster.md)
 - [Test Flink application with JUnit](40_Test_Flink_Application_with_JUnit.md)
   - [Test operator map](41_Test_Operator_Map.md)
+  - [Test operators](42_Test_Operators.md)
