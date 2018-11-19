@@ -8,7 +8,7 @@ Under Linux console, run following command
 mvn archetype:generate                               \
   -DarchetypeGroupId=org.apache.flink                \
   -DarchetypeArtifactId=flink-quickstart-java        \
-  -DarchetypeVersion=1.6.1                           \
+  -DarchetypeVersion=1.6.2                           \
   -DgroupId=yuanyangwu.flink                         \
   -DartifactId=flink-training                        \
   -Dversion=0.1                                      \
@@ -22,7 +22,7 @@ Under Windows console, run following command
 mvn archetype:generate                               ^
   -DarchetypeGroupId=org.apache.flink                ^
   -DarchetypeArtifactId=flink-quickstart-java        ^
-  -DarchetypeVersion=1.6.1                           ^
+  -DarchetypeVersion=1.6.2                           ^
   -DgroupId=yuanyangwu.flink                         ^
   -DartifactId=flink-training                        ^
   -Dversion=0.1                                      ^
