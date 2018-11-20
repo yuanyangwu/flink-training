@@ -6,6 +6,8 @@ import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.junit.Test;
 import yuanyangwu.flink.training.util.LogSink;
+import yuanyangwu.flink.training.util.PersonIncoming;
+import yuanyangwu.flink.training.util.TupleBasedPersonIncoming;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,32 +46,6 @@ public class KeyByTest {
                 , result);
     }
 
-    public static class TupleBasedPersonIncoming extends Tuple2<String, Integer> {
-        public TupleBasedPersonIncoming() {
-            super();
-        }
-
-        public TupleBasedPersonIncoming(String person, Integer incoming) {
-            super(person, incoming);
-        }
-
-        public void setPerson(String person) {
-            this.f0 = person;
-        }
-
-        public String getPerson() {
-            return this.f0;
-        }
-
-        public void setIncoming(Integer incoming) {
-            this.f1 = incoming;
-        }
-
-        public Integer getIncoming() {
-            return this.f1;
-        }
-    }
-
     @Test
     public void keyByTupleBasedPersonIncomingTest() throws Exception {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
@@ -101,65 +77,6 @@ public class KeyByTest {
                 new TupleBasedPersonIncoming("Mary", 21),
                 new TupleBasedPersonIncoming("Mary", 23));
         assertEquals(expected, result);
-    }
-
-    public static class PersonIncoming {
-        public String person;
-        public int incoming;
-
-        public PersonIncoming() {
-            person = "";
-            incoming = 0;
-        }
-
-        public PersonIncoming(String person, int incoming) {
-            this.person = person;
-            this.incoming = incoming;
-        }
-
-        public String getPerson() {
-            return person;
-        }
-
-        public void setPerson(String person) {
-            this.person = person;
-        }
-
-        public int getIncoming() {
-            return incoming;
-        }
-
-        public void setIncoming(int incoming) {
-            this.incoming = incoming;
-        }
-
-        @Override
-        public String toString() {
-            return "{person=" + person + ", incoming=" + incoming + "}";
-        }
-
-        @Override
-        public int hashCode() {
-            int result = person != null ? person.hashCode() : 0;
-            result = 31 * result + incoming;
-            return result;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj) {
-                return true;
-            }
-            if (!(obj instanceof PersonIncoming)) {
-                return false;
-            }
-            @SuppressWarnings("rawtypes")
-            PersonIncoming value = (PersonIncoming) obj;
-            if (person != null ? !person.equals(value.person) : value.person != null) {
-                return false;
-            }
-            return incoming == value.incoming;
-        }
     }
 
     @Test
