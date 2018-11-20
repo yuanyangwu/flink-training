@@ -10,8 +10,7 @@
   - keyByTupleBasedPersonIncomingTest, specify Tuple-based getter/setting class field by 0-based index
   - keyByPojoTest, specify Pojo class field by string-type field name
 - reduce, yuanyangwu.flink.training.streaming.operator.ReduceTest
-- fold, 
-- aggregations, 
+- aggregations, yuanyangwu.flink.training.streaming.operator.AggregationTest
 - window
 - windowAll
 - window apply
