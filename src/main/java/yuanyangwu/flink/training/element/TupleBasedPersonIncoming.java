@@ -1,4 +1,4 @@
-package yuanyangwu.flink.training.util;
+package yuanyangwu.flink.training.element;
 
 import org.apache.flink.api.java.tuple.Tuple2;
 

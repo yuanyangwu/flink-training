@@ -1,4 +1,4 @@
-package yuanyangwu.flink.training.util;
+package yuanyangwu.flink.training.element;
 
 public class PersonIncoming {
     public String person;

@@ -1,13 +1,11 @@
 package yuanyangwu.flink.training.streaming.operator;
 
-import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.streaming.api.datastream.DataStreamUtils;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.junit.Test;
-import yuanyangwu.flink.training.util.IdPersonIncoming;
-import yuanyangwu.flink.training.util.PersonIncoming;
+import yuanyangwu.flink.training.element.PersonIncoming;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -6,8 +6,8 @@ import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.junit.Test;
 import yuanyangwu.flink.training.util.LogSink;
-import yuanyangwu.flink.training.util.PersonIncoming;
-import yuanyangwu.flink.training.util.TupleBasedPersonIncoming;
+import yuanyangwu.flink.training.element.PersonIncoming;
+import yuanyangwu.flink.training.element.TupleBasedPersonIncoming;
 
 import java.util.ArrayList;
 import java.util.Arrays;
