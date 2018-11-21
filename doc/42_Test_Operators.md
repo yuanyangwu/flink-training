@@ -11,7 +11,8 @@
   - keyByPojoTest, specify Pojo class field by string-type field name
 - reduce, yuanyangwu.flink.training.streaming.operator.ReduceTest
 - aggregations, yuanyangwu.flink.training.streaming.operator.AggregationTest
-- window
+- window, yuanyangwu.flink.training.streaming.operator.WindowTest
+  - tumblingWindowTest, tumbling window
 - windowAll
 - window apply
 - window reduce
