@@ -2,17 +2,13 @@ package yuanyangwu.flink.training.streaming.operator;
 
 import org.apache.flink.api.common.functions.ReduceFunction;
 import org.apache.flink.api.java.tuple.Tuple2;
-import org.apache.flink.streaming.api.datastream.DataStreamUtils;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static yuanyangwu.flink.training.Assert.assertStreamEquals;
 
 public class ReduceTest {
     @Test
@@ -35,17 +31,12 @@ public class ReduceTest {
                     }
                 });
 
-        // convert stream to list
-        final Iterator<Tuple2<String, Integer>> iterator = DataStreamUtils.collect(stream);
-        List<Tuple2<String, Integer>> result = new ArrayList<>();
-        iterator.forEachRemaining(result::add);
-
-        assertEquals(Arrays.asList(
+        assertStreamEquals(Arrays.asList(
                 new Tuple2<>("Tom", 10),
                 new Tuple2<>("Mary", 20),
                 new Tuple2<>("Tom", 25),
                 new Tuple2<>("Mary", 21),
-                new Tuple2<>("Mary", 23))
-                , result);
+                new Tuple2<>("Mary", 23)),
+                stream);
     }
 }
