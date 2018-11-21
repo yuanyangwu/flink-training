@@ -3,11 +3,14 @@ package yuanyangwu.flink.training.streaming.source;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
+import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.AssignerWithPunctuatedWatermarks;
 import org.apache.flink.streaming.api.watermark.Watermark;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import yuanyangwu.flink.training.element.PersonIncoming;
+import yuanyangwu.flink.training.streaming.source.csv.TimestampedCsvSource;
 import yuanyangwu.flink.training.util.FlinkTimestamp;
 import yuanyangwu.flink.training.util.LogSink;
 
@@ -19,45 +22,6 @@ import java.time.ZoneOffset;
 public class CsvSourceApp {
     private static Logger LOG = LoggerFactory.getLogger(CsvSourceApp.class);
 
-    public static class Person  {
-        public String name;
-        public Integer incoming;
-
-        public Person(String name, Integer incoming) {
-            this.name = name;
-            this.incoming = incoming;
-        }
-
-        @Override
-        public String toString() {
-            return "Person{name=" + name + ", incoming=" + incoming + "}";
-        }
-    }
-
-    private static class StringAssignerWithPunctuatedWatermarks implements AssignerWithPunctuatedWatermarks<String> {
-        private static final long serialVersionUID = 1L;
-        private long timestamp = FlinkTimestamp.fromLocalDateTime(LocalDateTime.now(ZoneOffset.UTC));
-
-        @Nullable
-        @Override
-        public Watermark checkAndGetNextWatermark(String lastElement, long extractedTimestamp) {
-            return new Watermark(extractedTimestamp - 1);
-        }
-
-        @Override
-        public long extractTimestamp(String element, long previousElementTimestamp) {
-            try {
-                String [] fields = element.split(",", 2);
-                LocalDateTime dateTime = LocalDateTime.parse(fields[0]);
-                timestamp = FlinkTimestamp.fromLocalDateTime(dateTime);
-            } catch (DateTimeException e) {
-                // increase by 1 if first field is invalid
-                timestamp++;
-            }
-            return timestamp;
-        }
-    }
-
     public static void main(String[] args) {
         try {
             final String PATH = "file:///C:/dev/work/flink-training/src/main/resources/person_incoming.csv";
@@ -68,14 +32,13 @@ public class CsvSourceApp {
                     .setParallelism(1)
                     .setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
 
-            DataStreamSource<String> source = env.readTextFile(PATH);
+            SingleOutputStreamOperator<String> source = TimestampedCsvSource.fromFile(env, PATH);
             source
-                    .assignTimestampsAndWatermarks(new StringAssignerWithPunctuatedWatermarks())
-                    .map(new MapFunction<String, Person>() {
+                    .map(new MapFunction<String, PersonIncoming>() {
                         @Override
-                        public Person map(String value) throws Exception {
-                            String[] fields = value.split(",", 4);
-                            return new Person(fields[1], Integer.parseInt(fields[2]));
+                        public PersonIncoming map(String value) throws Exception {
+                            String[] fields = value.split(",", 2);
+                            return new PersonIncoming(fields[0], Integer.parseInt(fields[1]));
                         }
                     })
                     .addSink(new LogSink<>("csv"));
