@@ -2,8 +2,6 @@ package yuanyangwu.flink.training.streaming.source.csv;
 
 import org.apache.flink.api.common.JobExecutionResult;
 import org.apache.flink.api.common.functions.FlatMapFunction;
-import org.apache.flink.api.common.functions.MapFunction;
-import org.apache.flink.api.java.tuple.Tuple3;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
@@ -89,16 +87,12 @@ public class TimestampedCsvSource {
 
     public static SingleOutputStreamOperator<String> fromCollection(StreamExecutionEnvironment env, Collection<String> input) {
         env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
-        return fromStream(
-                env
-                .setParallelism(1)
-                .fromCollection(input)
-                );
+        return fromStream(env.setParallelism(1).fromCollection(input));
     }
 
     public static SingleOutputStreamOperator<String> fromFile(StreamExecutionEnvironment env, String path) {
         env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
-        return fromStream(env.readTextFile(path));
+        return fromStream(env.setParallelism(1).readTextFile(path));
     }
 
     public static void main(String[] args) {

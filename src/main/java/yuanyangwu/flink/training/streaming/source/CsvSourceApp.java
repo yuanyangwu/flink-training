@@ -27,11 +27,6 @@ public class CsvSourceApp {
             final String PATH = "file:///C:/dev/work/flink-training/src/main/resources/person_incoming.csv";
 
             StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-            env
-                    .setBufferTimeout(1000)
-                    .setParallelism(1)
-                    .setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
-
             SingleOutputStreamOperator<String> source = TimestampedCsvSource.fromFile(env, PATH);
             source
                     .map(new MapFunction<String, PersonIncoming>() {
