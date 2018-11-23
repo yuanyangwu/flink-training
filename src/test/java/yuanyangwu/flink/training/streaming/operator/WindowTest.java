@@ -51,6 +51,16 @@ public class WindowTest {
                 });
     }
 
+    //    orig   timestamp=2018-11-08T13:00 watermark=-9223372036854775808 value=(Mike,10)
+    //    orig   timestamp=2018-11-08T13:00:00.100 watermark=-9223372036854775808 value=(John,20)
+    //    orig   timestamp=2018-11-08T13:00:00.200 watermark=2018-11-08T13:00:00.120 value=(Mike,30)
+    //    orig   timestamp=2018-11-08T13:00:00.300 watermark=2018-11-08T13:00:00.120 value=(Mike,25)
+    //    orig   timestamp=2018-11-08T13:00:00.400 watermark=2018-11-08T13:00:00.300 value=(John,12)
+    //    orig   timestamp=2018-11-08T13:00:00.500 watermark=2018-11-08T13:00:00.300 value=(John,50)
+    //    window timestamp=2018-11-08T13:00:00.299 watermark=2018-11-08T13:00:00.120 value=(Mike,40)
+    //    window timestamp=2018-11-08T13:00:00.299 watermark=2018-11-08T13:00:00.120 value=(John,20)
+    //    window timestamp=2018-11-08T13:00:00.599 watermark=2018-11-08T13:00:00.500 value=(Mike,25)
+    //    window timestamp=2018-11-08T13:00:00.599 watermark=2018-11-08T13:00:00.500 value=(John,62)
     @Test
     public void tumblingWindowTest() throws Exception {
         final SingleOutputStreamOperator<Tuple2<String, Integer>> stream = orig
@@ -69,6 +79,26 @@ public class WindowTest {
                 stream);
     }
 
+    //    orig   timestamp=2018-11-08T13:00 watermark=-9223372036854775808 value=(Mike,10)
+    //    orig   timestamp=2018-11-08T13:00:00.200 watermark=2018-11-08T13:00:00.120 value=(Mike,30)
+    //    orig   timestamp=2018-11-08T13:00:00.300 watermark=2018-11-08T13:00:00.120 value=(Mike,25)
+    //    window timestamp=2018-11-08T13:00:00.099 watermark=-9223372036854775808 value=(Mike,10)
+    //    window timestamp=2018-11-08T13:00:00.199 watermark=2018-11-08T13:00:00.120 value=(Mike,10)
+    //    window timestamp=2018-11-08T13:00:00.299 watermark=2018-11-08T13:00:00.120 value=(Mike,40)
+    //    window timestamp=2018-11-08T13:00:00.399 watermark=2018-11-08T13:00:00.300 value=(Mike,55)
+    //    window timestamp=2018-11-08T13:00:00.499 watermark=2018-11-08T13:00:00.300 value=(Mike,55)
+    //    window timestamp=2018-11-08T13:00:00.599 watermark=2018-11-08T13:00:00.500 value=(Mike,25)
+    //
+    //    orig   timestamp=2018-11-08T13:00:00.100 watermark=-9223372036854775808 value=(John,20)
+    //    orig   timestamp=2018-11-08T13:00:00.400 watermark=2018-11-08T13:00:00.300 value=(John,12)
+    //    orig   timestamp=2018-11-08T13:00:00.500 watermark=2018-11-08T13:00:00.300 value=(John,50)
+    //    window timestamp=2018-11-08T13:00:00.199 watermark=2018-11-08T13:00:00.120 value=(John,20)
+    //    window timestamp=2018-11-08T13:00:00.299 watermark=2018-11-08T13:00:00.120 value=(John,20)
+    //    window timestamp=2018-11-08T13:00:00.399 watermark=2018-11-08T13:00:00.300 value=(John,20)
+    //    window timestamp=2018-11-08T13:00:00.499 watermark=2018-11-08T13:00:00.300 value=(John,12)
+    //    window timestamp=2018-11-08T13:00:00.599 watermark=2018-11-08T13:00:00.500 value=(John,62)
+    //    window timestamp=2018-11-08T13:00:00.699 watermark=2018-11-08T13:00:00.500 value=(John,62)
+    //    window timestamp=2018-11-08T13:00:00.799 watermark=2018-11-08T13:00:00.500 value=(John,50)
     @Test
     public void slidingWindowTest() throws Exception {
         final SingleOutputStreamOperator<Tuple2<String, Integer>> stream = orig
