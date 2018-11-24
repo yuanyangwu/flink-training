@@ -14,7 +14,11 @@
 - window, yuanyangwu.flink.training.streaming.operator.WindowTest
   - tumblingWindowTest, tumbling window
   - slideWindowTest, sliding window
-- windowAll
+  - sessionWindowTest, session window
+- windowAll yuanyangwu.flink.training.streaming.operator.WindowAllTest
+  - tumblingWindowAllTest, tumbling window all-keys
+  - slideWindowAllTest, sliding window all-keys
+  - sessionWindowAllTest, session window all-keys
 - window apply
 - window reduce
 - window fold
