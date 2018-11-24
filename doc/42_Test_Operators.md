@@ -21,7 +21,7 @@
   - sessionWindowAllTest, session window all-keys
 - window apply yuanyangwu.flink.training.streaming.operator.WindowAllTest
 - window reduce yuanyangwu.flink.training.streaming.operator.WindowReduceTest
-- aggregations on windows
+- aggregations on windows yuanyangwu.flink.training.streaming.operator.WindowAggregationTest
 - union
 - window join
 - interval join
