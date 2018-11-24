@@ -13,6 +13,7 @@
 - aggregations, yuanyangwu.flink.training.streaming.operator.AggregationTest
 - window, yuanyangwu.flink.training.streaming.operator.WindowTest
   - tumblingWindowTest, tumbling window
+  - slideWindowTest, sliding window
 - windowAll
 - window apply
 - window reduce

@@ -3,9 +3,9 @@ package yuanyangwu.flink.training.streaming.operator;
 import org.apache.flink.api.common.functions.FilterFunction;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.java.tuple.Tuple2;
-import org.apache.flink.streaming.api.datastream.DataStreamUtils;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.streaming.api.windowing.assigners.EventTimeSessionWindows;
 import org.apache.flink.streaming.api.windowing.assigners.SlidingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
@@ -15,12 +15,8 @@ import yuanyangwu.flink.training.streaming.source.csv.CsvStringTuple2MapFunction
 import yuanyangwu.flink.training.streaming.source.csv.TimestampedCsvSource;
 import yuanyangwu.flink.training.util.LogSink;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
 
-import static org.junit.Assert.assertEquals;
 import static yuanyangwu.flink.training.Assert.assertStreamEquals;
 
 public class WindowTest {
@@ -120,6 +116,39 @@ public class WindowTest {
                     @Override
                     public boolean filter(Tuple2<String, Integer> value) throws Exception {
                         return value.f0.equals("Mike");
+                    }
+                })
+        );
+    }
+
+    //    orig   timestamp=2018-11-08T13:00 watermark=-9223372036854775808 value=(Mike,10)
+    //    orig   timestamp=2018-11-08T13:00:00.200 watermark=2018-11-08T13:00:00.120 value=(Mike,30)
+    //    orig   timestamp=2018-11-08T13:00:00.300 watermark=2018-11-08T13:00:00.120 value=(Mike,25)
+    //    window timestamp=2018-11-08T13:00:00.109 watermark=-9223372036854775808 value=(Mike,10)
+    //    window timestamp=2018-11-08T13:00:00.409 watermark=2018-11-08T13:00:00.300 value=(Mike,55)
+    //
+    //    orig   timestamp=2018-11-08T13:00:00.100 watermark=-9223372036854775808 value=(John,20)
+    //    orig   timestamp=2018-11-08T13:00:00.400 watermark=2018-11-08T13:00:00.300 value=(John,12)
+    //    orig   timestamp=2018-11-08T13:00:00.500 watermark=2018-11-08T13:00:00.300 value=(John,50)
+    //    window timestamp=2018-11-08T13:00:00.209 watermark=2018-11-08T13:00:00.120 value=(John,20)
+    //    window timestamp=2018-11-08T13:00:00.609 watermark=2018-11-08T13:00:00.500 value=(John,62)
+    @Test
+    public void sessionWindowTest() throws Exception {
+        final SingleOutputStreamOperator<Tuple2<String, Integer>> stream = orig
+                .keyBy(0)
+                .window(EventTimeSessionWindows.withGap(Time.milliseconds(110L)))
+                .sum(1);
+
+        orig.addSink(new LogSink<>("orig  "));
+        stream.addSink(new LogSink<>("window"));
+
+        assertStreamEquals(Arrays.asList(
+                new Tuple2<>("John", 20),
+                new Tuple2<>("John", 62)),
+                stream.filter(new FilterFunction<Tuple2<String, Integer>>() {
+                    @Override
+                    public boolean filter(Tuple2<String, Integer> value) throws Exception {
+                        return value.f0.equals("John");
                     }
                 })
         );
