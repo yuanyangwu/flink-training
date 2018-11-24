@@ -19,7 +19,7 @@
   - tumblingWindowAllTest, tumbling window all-keys
   - slideWindowAllTest, sliding window all-keys
   - sessionWindowAllTest, session window all-keys
-- window apply
+- window apply yuanyangwu.flink.training.streaming.operator.WindowAllTest
 - window reduce
 - window fold
 - aggregations on windows
