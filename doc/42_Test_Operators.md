@@ -20,8 +20,7 @@
   - slideWindowAllTest, sliding window all-keys
   - sessionWindowAllTest, session window all-keys
 - window apply yuanyangwu.flink.training.streaming.operator.WindowAllTest
-- window reduce
-- window fold
+- window reduce yuanyangwu.flink.training.streaming.operator.WindowReduceTest
 - aggregations on windows
 - union
 - window join
