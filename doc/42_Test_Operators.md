@@ -24,7 +24,7 @@
 - aggregations on windows yuanyangwu.flink.training.streaming.operator.WindowAggregationTest
 - union yuanyangwu.flink.training.streaming.operator.UnionTest
 - window join yuanyangwu.flink.training.streaming.operator.WindowJoinTest
-- interval join
+- interval join yuanyangwu.flink.training.streaming.operator.IntervalJoinTest
 - window coGroup
 - connect
 - coMap, coFlapMap
