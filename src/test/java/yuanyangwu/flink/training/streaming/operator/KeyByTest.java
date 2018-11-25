@@ -1,7 +1,6 @@
 package yuanyangwu.flink.training.streaming.operator;
 
 import org.apache.flink.api.java.tuple.Tuple2;
-import org.apache.flink.streaming.api.datastream.DataStreamUtils;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.junit.Test;
@@ -9,12 +8,9 @@ import yuanyangwu.flink.training.util.LogSink;
 import yuanyangwu.flink.training.element.PersonIncoming;
 import yuanyangwu.flink.training.element.TupleBasedPersonIncoming;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
 
-import static yuanyangwu.flink.training.Assert.assertStreamEquals;
+import static yuanyangwu.flink.training.TestUtil.assertStreamEquals;
 
 public class KeyByTest {
     @Test

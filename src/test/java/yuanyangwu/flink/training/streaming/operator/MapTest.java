@@ -8,7 +8,7 @@ import org.junit.Test;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
-import static yuanyangwu.flink.training.Assert.assertStreamEquals;
+import static yuanyangwu.flink.training.TestUtil.assertStreamEquals;
 
 public class MapTest {
     private static class LongStringMapFunction implements MapFunction<Long, String> {

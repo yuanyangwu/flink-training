@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
-import static yuanyangwu.flink.training.Assert.assertStreamEquals;
+import static yuanyangwu.flink.training.TestUtil.assertStreamEquals;
 
 public class FilterTest {
     private static class IntegerFilterFunction implements FilterFunction<Integer> {

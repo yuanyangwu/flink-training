@@ -11,13 +11,17 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class Assert {
-    public static <T> void assertStreamEquals(Collection<T> expected, DataStream<T> stream) throws IOException {
-        // convert stream to list
+public class TestUtil {
+    public static <T> Collection<T> streamToCollection(DataStream<T> stream) throws IOException {
         final Iterator<T> iterator = DataStreamUtils.collect(stream);
         List<T> result = new ArrayList<>();
         iterator.forEachRemaining(result::add);
 
-        assertEquals(expected, result);
+        return result;
+    }
+
+    public static <T> void assertStreamEquals(Collection<T> expected, DataStream<T> stream) throws IOException {
+        Collection<T> actual = streamToCollection(stream);
+        assertEquals(expected, actual);
     }
 }

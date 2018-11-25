@@ -22,7 +22,7 @@
 - window apply yuanyangwu.flink.training.streaming.operator.WindowAllTest
 - window reduce yuanyangwu.flink.training.streaming.operator.WindowReduceTest
 - aggregations on windows yuanyangwu.flink.training.streaming.operator.WindowAggregationTest
-- union
+- union yuanyangwu.flink.training.streaming.operator.UnionTest
 - window join
 - interval join
 - window coGroup

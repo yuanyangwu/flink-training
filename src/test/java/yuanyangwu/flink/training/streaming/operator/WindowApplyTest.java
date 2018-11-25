@@ -18,7 +18,7 @@ import yuanyangwu.flink.training.util.LogSink;
 
 import java.util.Arrays;
 
-import static yuanyangwu.flink.training.Assert.assertStreamEquals;
+import static yuanyangwu.flink.training.TestUtil.assertStreamEquals;
 
 public class WindowApplyTest {
     private SingleOutputStreamOperator<Tuple2<String, Integer>> orig;
