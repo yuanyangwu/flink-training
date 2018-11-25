@@ -29,8 +29,9 @@
 - connect, coMap, coFlapMap yuanyangwu.flink.training.streaming.operator.ConnectTest
 - split, select yuanyangwu.flink.training.streaming.operator.SplitTest
 - iterate
-- extract timestamps
 
 ## Physical partitioning
+
+- project yuanyangwu.flink.training.streaming.operator.ProjectTest
 
 ## Task chaining and resource groups
