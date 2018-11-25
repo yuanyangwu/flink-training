@@ -26,8 +26,7 @@
 - window join yuanyangwu.flink.training.streaming.operator.WindowJoinTest
 - interval join yuanyangwu.flink.training.streaming.operator.IntervalJoinTest
 - window coGroup yuanyangwu.flink.training.streaming.operator.WindowCoGroupTest
-- connect
-- coMap, coFlapMap
+- connect, coMap, coFlapMap yuanyangwu.flink.training.streaming.operator.ConnectTest
 - split
 - select
 - iterate
