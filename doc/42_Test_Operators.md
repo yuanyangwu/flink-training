@@ -15,6 +15,12 @@
   - tumblingWindowTest, tumbling window
   - slideWindowTest, sliding window
   - sessionWindowTest, session window
+  - ProcessWindowFunction yuanyangwu.flink.training.streaming.operator.ProcessWindowFunctionTest
+  - trigger
+  - evictor
+  - allowedLateness
+  - sideOutputLateData
+  - getSideOutput
 - windowAll yuanyangwu.flink.training.streaming.operator.WindowAllTest
   - tumblingWindowAllTest, tumbling window all-keys
   - slideWindowAllTest, sliding window all-keys
@@ -28,7 +34,7 @@
 - window coGroup yuanyangwu.flink.training.streaming.operator.WindowCoGroupTest
 - connect, coMap, coFlapMap yuanyangwu.flink.training.streaming.operator.ConnectTest
 - split, select yuanyangwu.flink.training.streaming.operator.SplitTest
-- iterate
+- iterate TODO
 
 ## Physical partitioning
 
