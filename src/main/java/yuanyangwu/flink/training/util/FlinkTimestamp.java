@@ -4,9 +4,9 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
 public final class FlinkTimestamp {
-    public static long fromLocalDateTime(LocalDateTime localDataTime) {
-        return localDataTime.toEpochSecond(ZoneOffset.UTC) * 1000
-                + localDataTime.getNano() / 1000000;
+    public static long fromLocalDateTime(LocalDateTime localDateTime) {
+        return localDateTime.toEpochSecond(ZoneOffset.UTC) * 1000
+                + localDateTime.getNano() / 1000000;
     }
 
     public static LocalDateTime toLocalDateTime(long timestampInMillisecond) {
