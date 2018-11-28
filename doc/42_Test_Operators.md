@@ -17,7 +17,10 @@
   - sessionWindowTest, session window
   - ProcessWindowFunction yuanyangwu.flink.training.streaming.operator.ProcessWindowFunctionTest
   - trigger
-  - evictor
+  - evictor yuanyangwu.flink.training.streaming.operator.EvictorTest
+    - CountEvictor
+    - DeltaEvictor
+    - TimeEvictor
   - allowedLateness
   - sideOutputLateData
   - getSideOutput
