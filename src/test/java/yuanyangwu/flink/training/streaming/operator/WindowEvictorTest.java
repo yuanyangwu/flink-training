@@ -20,7 +20,7 @@ import java.util.Arrays;
 
 import static yuanyangwu.flink.training.TestUtil.assertStreamEquals;
 
-public class EvictorTest {
+public class WindowEvictorTest {
     private SingleOutputStreamOperator<Tuple2<String, Integer>> orig;
 
     @Before
