@@ -21,7 +21,7 @@
     - CountEvictor
     - DeltaEvictor
     - TimeEvictor
-  - allowedLateness
+  - allowedLateness yuanyangwu.flink.training.streaming.operator.WindowAllowedLatenessTest
   - sideOutputLateData
   - getSideOutput
 - windowAll yuanyangwu.flink.training.streaming.operator.WindowAllTest
