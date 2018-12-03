@@ -257,7 +257,7 @@ A: A window ends when watermark is equal to or larger than "window max timestamp
 
 Q2: How does Flink decide whether a window can accept an event?
 
-A: If an event arrives before window ends, it is accepted. Otherwise, it is dropped.
+A: If an event arrives before window ends, it is accepted. Otherwise, it is dropped. Window fires a result if window accepts a event between [window max timestamp, window max timestamp + lateness).
 
 window000 max timestamp + lateness is 2018-11-08T13:00:00.099 + 0.010 = 2018-11-08T13:00:00.109. "(Mike,40000)" is accepted because it happens before watermark "WATERMARK.2018-11-08T13:00:00.109". "(Mike,500000)" is dropped because it happens after the watermark.
 
@@ -314,6 +314,6 @@ public class WindowOperator<K, IN, ACC, OUT, W extends Window>
 
 Both test and code helps reach out the conclusion.
 
-In Apache Flink, "lateness" is for window stream using event time. It decides how "late" a window can accept events. A window is "late" when watermark is equal to or larger than "window max timestamp + lateness". For an event whose event timestamp is in [window min timestamp, window max timestamp], if it arrives before window is "late", it is accepted. Otherwise, it is dropped.
+In Apache Flink, "lateness" is for window stream using event time. It decides how "late" a window can accept events. A window is "late" when watermark is equal to or larger than "window max timestamp + lateness". For an event whose event timestamp is in [window min timestamp, window max timestamp], if it arrives before window is "late", it is accepted. Otherwise, it is dropped. With positive lateness, same window may fire the result for multiple times. Window fires a result if window accepts a event when watermark is between [window max timestamp, window max timestamp + lateness).
 
 My test code is at [WindowAllowedLatenessTest.java](https://github.com/yuanyangwu/flink-training/blob/master/src/test/java/yuanyangwu/flink/training/streaming/operator/WindowAllowedLatenessTest.java)
