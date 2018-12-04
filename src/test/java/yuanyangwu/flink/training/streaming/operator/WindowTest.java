@@ -153,4 +153,64 @@ public class WindowTest {
                 })
         );
     }
+
+    //    orig   timestamp=2018-11-08T13:00 watermark=-9223372036854775808 value=(Mike,10)
+    //    orig   timestamp=2018-11-08T13:00:00.100 watermark=-9223372036854775808 value=(John,20)
+    //    orig   timestamp=2018-11-08T13:00:00.200 watermark=2018-11-08T13:00:00.120 value=(Mike,30)
+    //    orig   timestamp=2018-11-08T13:00:00.300 watermark=2018-11-08T13:00:00.120 value=(Mike,25)
+    //    orig   timestamp=2018-11-08T13:00:00.400 watermark=2018-11-08T13:00:00.300 value=(John,12)
+    //    orig   timestamp=2018-11-08T13:00:00.500 watermark=2018-11-08T13:00:00.300 value=(John,50)
+    //    window timestamp=+292278994-08-17T07:12:55.807 watermark=2018-11-08T13:00:00.120 value=(Mike,40)
+    //    window timestamp=+292278994-08-17T07:12:55.807 watermark=2018-11-08T13:00:00.300 value=(John,32)
+    @Test
+    public void countWindowTest() throws Exception {
+        final SingleOutputStreamOperator<Tuple2<String, Integer>> stream = orig
+                .keyBy(0)
+                .countWindow(2)
+                .sum(1);
+
+        orig.addSink(new LogSink<>("orig  "));
+        stream.addSink(new LogSink<>("window"));
+
+        assertStreamEquals(Arrays.asList(
+                new Tuple2<>("Mike", 40),
+                new Tuple2<>("John", 32)),
+                stream
+        );
+    }
+
+    //    orig   timestamp=2018-11-08T13:00 watermark=-9223372036854775808 value=(Mike,10)
+    //    orig   timestamp=2018-11-08T13:00:00.100 watermark=-9223372036854775808 value=(John,20)
+    //    orig   timestamp=2018-11-08T13:00:00.200 watermark=2018-11-08T13:00:00.120 value=(Mike,30)
+    //    orig   timestamp=2018-11-08T13:00:00.300 watermark=2018-11-08T13:00:00.120 value=(Mike,25)
+    //    orig   timestamp=2018-11-08T13:00:00.400 watermark=2018-11-08T13:00:00.300 value=(John,12)
+    //    orig   timestamp=2018-11-08T13:00:00.500 watermark=2018-11-08T13:00:00.300 value=(John,50)
+    //    window timestamp=+292278994-08-17T07:12:55.807 watermark=-9223372036854775808 value=(Mike,10)
+    //    window timestamp=+292278994-08-17T07:12:55.807 watermark=-9223372036854775808 value=(John,20)
+    //    window timestamp=+292278994-08-17T07:12:55.807 watermark=2018-11-08T13:00:00.120 value=(Mike,40)
+    //    window timestamp=+292278994-08-17T07:12:55.807 watermark=2018-11-08T13:00:00.120 value=(Mike,55)
+    //    window timestamp=+292278994-08-17T07:12:55.807 watermark=2018-11-08T13:00:00.300 value=(John,32)
+    //    window timestamp=+292278994-08-17T07:12:55.807 watermark=2018-11-08T13:00:00.300 value=(John,62)
+    @Test
+    public void countSlideWindowTest() throws Exception {
+        final SingleOutputStreamOperator<Tuple2<String, Integer>> stream = orig
+                .keyBy(0)
+                .countWindow(2, 1)
+                .sum(1);
+
+        orig.addSink(new LogSink<>("orig  "));
+        stream.addSink(new LogSink<>("window"));
+
+        assertStreamEquals(Arrays.asList(
+                new Tuple2<>("John", 20),
+                new Tuple2<>("John", 32),
+                new Tuple2<>("John", 62)),
+                stream.filter(new FilterFunction<Tuple2<String, Integer>>() {
+                    @Override
+                    public boolean filter(Tuple2<String, Integer> value) throws Exception {
+                        return value.f0.equals("John");
+                    }
+                })
+        );
+    }
 }
