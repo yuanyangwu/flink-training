@@ -37,6 +37,7 @@
 - connect, coMap, coFlapMap yuanyangwu.flink.training.streaming.operator.ConnectTest
 - split, select yuanyangwu.flink.training.streaming.operator.SplitTest
 - iterate TODO
+- async yuanyangwu.flink.training.streaming.operator.AsyncTest
 
 ## Physical partitioning
 
