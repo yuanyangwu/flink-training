@@ -14,3 +14,6 @@
   - [Test operator map](41_Test_Operator_Map.md)
   - [Test operators](42_Test_Operators.md)
   - [Understand Window Lateness](43_Understand_Window_Lateness.md)
+- Table API
+  - [Simple table application](51_Simple_Table_Application.md)
+- SQL API
