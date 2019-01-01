@@ -11,38 +11,23 @@ class: yuanyangwu.flink.training.streaming.source.PojoSourceApp
 
 ## POJO-type
 
-```java
-public static class Person  {
-    public String name;
-    public Integer incoming;
-
-    public Person(String name, Integer incoming) {
-        this.name = name;
-        this.incoming = incoming;
-    }
-
-    @Override
-    public String toString() {
-        return "Person{name=" + name + ", incoming=" + incoming + "}";
-    }
-}
-```
+yuanyangwu.flink.training.element.PersonIncoming
 
 ## POJO-type event source
 
 ```java
-public static class PersonSource implements SourceFunction<Person> {
+public static class PersonSource implements SourceFunction<PersonIncoming> {
     private static final long serialVersionUID = 1L;
     private volatile boolean isRunning = true;
 
     @Override
-    public void run(SourceContext<Person> ctx) throws Exception {
+    public void run(SourceContext<PersonIncoming> ctx) throws Exception {
         final String [] names = {"Tom", "John", "Alice", "Mary"};
         int counter = 0;
         while (isRunning) {
             LocalDateTime current = LocalDateTime.now(ZoneOffset.UTC);
             long epoch = FlinkTimestamp.fromLocalDateTime(current);
-            ctx.collectWithTimestamp(new Person(names[counter % names.length], counter), epoch);
+            ctx.collectWithTimestamp(new PersonIncoming(names[counter % names.length], counter), epoch);
             if (counter % 10 == 0) {
                 ctx.emitWatermark(new Watermark(epoch - 1));
             }
@@ -70,7 +55,7 @@ public class PojoSourceApp {
                     .setParallelism(1)
                     .setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
 
-            DataStreamSource<Person> source = env.addSource(new PersonSource());
+            DataStreamSource<PersonIncoming> source = env.addSource(new PersonSource());
             source.addSink(new LogSink<>("PersonSink"));
 
             env.execute("PojoSourceApp");
@@ -84,9 +69,11 @@ public class PojoSourceApp {
 Test result shows Person events are logged.
 
 ```console
-18:03:08,452 INFO  yuanyangwu.flink.training.util.LogSink                        - PersonSink timestamp=2018-11-07T10:03:07.833 watermark=-9223372036854775808 value=Person{name=Tom, incoming=0}
-18:03:08,553 INFO  yuanyangwu.flink.training.util.LogSink                        - PersonSink timestamp=2018-11-07T10:03:08.553 watermark=2018-11-07T10:03:07.832 value=Person{name=John, incoming=1}
-18:03:08,654 INFO  yuanyangwu.flink.training.util.LogSink                        - PersonSink timestamp=2018-11-07T10:03:08.654 watermark=2018-11-07T10:03:07.832 value=Person{name=Alice, incoming=2}
-18:03:08,755 INFO  yuanyangwu.flink.training.util.LogSink                        - PersonSink timestamp=2018-11-07T10:03:08.755 watermark=2018-11-07T10:03:07.832 value=Person{name=Mary, incoming=3}
-18:03:08,855 INFO  yuanyangwu.flink.training.util.LogSink                        - PersonSink timestamp=2018-11-07T10:03:08.855 watermark=2018-11-07T10:03:07.832 value=Person{name=Tom, incoming=4}
+21:56:26,258 INFO  yuanyangwu.flink.training.util.LogSink                        - PersonSink timestamp=2019-01-01T13:56:26.199 watermark=-9223372036854775808 value={person=Tom, incoming=0}
+21:56:26,374 INFO  yuanyangwu.flink.training.util.LogSink                        - PersonSink timestamp=2019-01-01T13:56:26.374 watermark=2019-01-01T13:56:26.198 value={person=John, incoming=1}
+21:56:26,487 INFO  yuanyangwu.flink.training.util.LogSink                        - PersonSink timestamp=2019-01-01T13:56:26.487 watermark=2019-01-01T13:56:26.198 value={person=Alice, incoming=2}
+21:56:26,592 INFO  yuanyangwu.flink.training.util.LogSink                        - PersonSink timestamp=2019-01-01T13:56:26.592 watermark=2019-01-01T13:56:26.198 value={person=Mary, incoming=3}
+21:56:26,703 INFO  yuanyangwu.flink.training.util.LogSink                        - PersonSink timestamp=2019-01-01T13:56:26.703 watermark=2019-01-01T13:56:26.198 value={person=Tom, incoming=4}
+21:56:26,817 INFO  yuanyangwu.flink.training.util.LogSink                        - PersonSink timestamp=2019-01-01T13:56:26.817 watermark=2019-01-01T13:56:26.198 value={person=John, incoming=5}
+21:56:26,929 INFO  yuanyangwu.flink.training.util.LogSink                        - PersonSink timestamp=2019-01-01T13:56:26.929 watermark=2019-01-01T13:56:26.198 value={person=Alice, incoming=6}
 ```
