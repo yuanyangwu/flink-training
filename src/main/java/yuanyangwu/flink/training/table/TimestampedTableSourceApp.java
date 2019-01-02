@@ -18,7 +18,7 @@ import yuanyangwu.flink.training.util.LogSink;
 import java.time.LocalDateTime;
 
 public class TimestampedTableSourceApp {
-    private static Logger LOG = LoggerFactory.getLogger(IntegerTableSourceApp.class);
+    private static Logger LOG = LoggerFactory.getLogger(TimestampedTableSourceApp.class);
 
     public static void main(String[] args) {
         try {
