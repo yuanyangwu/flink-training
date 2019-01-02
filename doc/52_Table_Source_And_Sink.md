@@ -32,6 +32,8 @@ Output
 
 ## Timestamped source
 
+yuanyangwu.flink.training.table.TimestampedTableSourceApp
+
 Use "TypeInformation.of(new TypeHint<T>(){})" to get tuple TypeInformation.
 
 ```text
@@ -58,6 +60,33 @@ Output
 21:46:39,176 INFO  yuanyangwu.flink.training.util.LogSink                        - table timestamp=null watermark=null value=(2019-01-01T13:46:39.176,99)
 21:46:39,285 INFO  yuanyangwu.flink.training.util.LogSink                        - source timestamp=null watermark=null value=(2019-01-01T13:46:39.285,0)
 21:46:39,285 INFO  yuanyangwu.flink.training.util.LogSink                        - table timestamp=null watermark=null value=(2019-01-01T13:46:39.285,0)
+```
+
+## Pojo source
+
+yuanyangwu.flink.training.table.PojoTableSourceApp
+
+Schema
+
+```text
+root
+ |-- incoming: Integer
+ |-- person: String
+```
+
+Output
+
+```text
+21:52:32,777 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom Source -> (Sink: Unnamed, from: (incoming, person) -> to: PersonIncoming -> Sink: Unnamed) (1/1) (d5ae18a53a7bbfaf797eedbf22f2123f) switched from DEPLOYING to RUNNING.
+21:52:32,781 INFO  org.apache.flink.streaming.runtime.tasks.StreamTask           - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+21:52:33,095 INFO  yuanyangwu.flink.training.util.LogSink                        - source timestamp=null watermark=null value={person=Tom, incoming=0}
+21:52:33,102 INFO  yuanyangwu.flink.training.util.LogSink                        - table timestamp=null watermark=null value={person=Tom, incoming=0}
+21:52:33,211 INFO  yuanyangwu.flink.training.util.LogSink                        - source timestamp=null watermark=null value={person=John, incoming=1}
+21:52:33,211 INFO  yuanyangwu.flink.training.util.LogSink                        - table timestamp=null watermark=null value={person=John, incoming=1}
+21:52:33,325 INFO  yuanyangwu.flink.training.util.LogSink                        - source timestamp=null watermark=null value={person=Alice, incoming=2}
+21:52:33,325 INFO  yuanyangwu.flink.training.util.LogSink                        - table timestamp=null watermark=null value={person=Alice, incoming=2}
+21:52:33,430 INFO  yuanyangwu.flink.training.util.LogSink                        - source timestamp=null watermark=null value={person=Mary, incoming=3}
+21:52:33,431 INFO  yuanyangwu.flink.training.util.LogSink                        - table timestamp=null watermark=null value={person=Mary, incoming=3}
 ```
 
 ## CSV source
